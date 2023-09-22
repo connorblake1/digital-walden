@@ -1,4 +1,7 @@
 from datetime import datetime, timedelta
+import pandas as pd
+import numpy as np
+from collections import namedtuple
 
 def excel_column_to_number(column_string):
     column_number = 0
@@ -29,7 +32,27 @@ default_labels = {
     '3': 'class 3',
     '4': 'class 4',
     '5': 'audit',
-    'j': 'email'
+    'j': 'email',
+    'k': 'quality social'
+}
+dw_eligible = {
+    's': False,
+    'e': False,
+    'r': True,
+    'p': True,
+    't': False,
+    'u': True,
+    'n': False,
+    'w': False,
+    'g': True,
+    'l': False,
+    '1': True,
+    '2': True,
+    '3': True,
+    '4': True,
+    '5': True,
+    'j': False,
+    'k': False
 }
 
 wbreak22_labels = default_labels.copy()
@@ -63,6 +86,16 @@ spring23_dict = {
     'dates': ['2023-03-20', '2023-05-26'],
     'defs': spring23_labels
 }
+week1_dict = {
+    'name': "week 1",
+    'dates': ['2023-04-10','2023-04-16'],
+    'defs': spring23_labels
+}
+week2_dict = {
+    'name': 'week 2',
+    'dates':['2023-05-08','2023-05-14'],
+    'defs':spring23_labels
+}
 
 summerjune_labels = default_labels.copy()
 summerjune_labels['1'] = "Shankar Quantum Mechanics"
@@ -78,7 +111,7 @@ summerjune_dict= {
 
 argonne_labels = default_labels.copy()
 argonne_labels['4'] = "Argonne"
-argonne_labels['3'] = "CS Placment Prep / Lin Alg."
+argonne_labels['3'] = "CS Placement Prep / Lin Alg."
 argonne_labels['2'] = None
 argonne_labels['1'] = None
 argonne_labels['5'] = None
@@ -92,3 +125,25 @@ start_row = 2
 start_col = excel_column_to_number('AB')
 end_col = excel_column_to_number('DS')
 start_date = datetime.strptime("2022-12-05",'%Y-%m-%d')
+timeframes = [wbreak22_dict,winter23_dict,spring23_dict,summerjune_dict,summerargonne_dict,week1_dict,week2_dict]
+df = pd.read_csv('Timespent.csv')
+days2num = {'mo':0,'tu':1,'we':2,'th':3,'fr':4,'sa':5,'su':6}
+num2days = {value: key for key, value in days2num.items()}
+
+def weektime2num(day,time):
+    h,t = divmod(time,100)
+    return days2num[day]*96+h*4+(t//15)
+def num2weektime(num):
+    d,t = divmod(num,96)
+    d = int(d) % 7
+    h,m = divmod(t,4)
+    timestr = h*100+15*m
+    return num2days[d],timestr
+Event = namedtuple("Event",["day","time","length","item","hardConstraint"])
+def heaviside(ix):
+    if ix >= 0:
+        return 1
+    else:
+        return 0
+def relu(ix):
+    return np.maximum(ix,0)
