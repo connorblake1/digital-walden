@@ -13,73 +13,73 @@ target_dict = dict()
 # event   day, time, #15 min blocks, category, hard constraint?
 
 # FALL 2023
-# target_dict['s'] = 50  # overhead + productivity multiplier
-# target_dict['r'] = 13  # practical experience + career dev + network + fun + friends + meaning + knowledge
-# target_dict['g'] = 16  # practical experience + career dev + network + knowledge
-# target_dict['e'] = 15  # overhead
-# target_dict['t'] = 10  # fun + friends
-# target_dict['k'] = 5  # meaning + friends + expand possibilities
-# target_dict['1'] = 8  # requirement + meaning + expand possibilities
-# target_dict['2'] = 11  # requirement + knowledge + network
-# target_dict['3'] = 12  # requirement + practical experience + career dev + network + knowledge
-# target_dict['4'] = 12  # requirement + practical experience + career dev + network + knowledge
-# target_dict['5'] = 0  # NA
-# target_dict['j'] = 1  # overhead
-# target_dict['l'] = 2  # expand possibilities
-# target_dict['w'] = 5  # health + productivity multiplier
-# target_dict['p'] = 2  # fun + practical experience
-# target_dict['u'] = 6  # expand possibilities + productivity multiplier
-# target_dict['n'] = 0  # none (all negative)
+target_dict['s'] = 50  # overhead + productivity multiplier
+target_dict['r'] = 13  # practical experience + career dev + network + fun + friends + meaning + knowledge
+target_dict['g'] = 16  # practical experience + career dev + network + knowledge
+target_dict['e'] = 15  # overhead
+target_dict['t'] = 10  # fun + friends
+target_dict['k'] = 5  # meaning + friends + expand possibilities
+target_dict['1'] = 8  # requirement + meaning + expand possibilities
+target_dict['2'] = 11  # requirement + knowledge + network
+target_dict['3'] = 12  # requirement + practical experience + career dev + network + knowledge
+target_dict['4'] = 12  # requirement + practical experience + career dev + network + knowledge
+target_dict['5'] = 0  # NA
+target_dict['j'] = 1  # overhead
+target_dict['l'] = 2  # expand possibilities
+target_dict['w'] = 5  # health + productivity multiplier
+target_dict['p'] = 2  # fun + practical experience
+target_dict['u'] = 6  # expand possibilities + productivity multiplier
+target_dict['n'] = 0  # none (all negative)
 
 
-# hardList = [
-#             Event("mo", 830, 4, '2', True), # math
-#             Event("we", 830, 4, '2', True),
-#             Event("fr", 830, 4, '2', True),
-#             Event("mo", 930, 4, '4', True), # chem
-#             Event("we", 930, 4, '4', True),
-#             Event("fr", 930, 4, '4', True),
-#             Event("mo", 1030, 4, '3', True), # physics
-#             Event("we", 1030, 4, '3', True),
-#             Event("fr", 1030, 4, '3', True),
-#             Event("tu", 930, 6, '1', True), # civ
-#             Event("th", 930, 6, '1', True),
-#             Event("fr", 1330, 4, 'g', True),  # yang lab
-#             Event("mo", 1830, 8, 'r', True)  # robotics
-#             ]
+hardList = [
+            Event("mo", 830, 4, '2', True), # math
+            Event("we", 830, 4, '2', True),
+            Event("fr", 830, 4, '2', True),
+            Event("mo", 930, 4, '4', True), # chem
+            Event("we", 930, 4, '4', True),
+            Event("fr", 930, 4, '4', True),
+            Event("mo", 1030, 4, '3', True), # physics
+            Event("we", 1030, 4, '3', True),
+            Event("fr", 1030, 4, '3', True),
+            Event("tu", 930, 6, '1', True), # civ
+            Event("th", 930, 6, '1', True),
+            Event("fr", 1330, 4, 'g', True),  # yang lab
+            Event("mo", 1830, 8, 'r', True)  # robotics
+            ]
 
 
 # spring quarter 2023
-target_dict['s'] = 50  # overhead + productivity multiplier
-target_dict['r'] = 9  # practical experience + career dev + network + fun + friends + meaning + knowledge
-target_dict['g'] = 15  # practical experience + career dev + network + knowledge
-target_dict['e'] = 15  # overhead
-target_dict['t'] = 12  # fun + friends
-target_dict['k'] = 0  # meaning + friends + expand possibilities
-target_dict['1'] = 9.5  # requirement + meaning + expand possibilities
-target_dict['2'] = 8.5  # requirement + knowledge + network
-target_dict['3'] = 13  # requirement + practical experience + career dev + network + knowledge
-target_dict['4'] = 13  # requirement + practical experience + career dev + network + knowledge
-target_dict['5'] = 1  # NA
-target_dict['j'] = 3  # overhead
-target_dict['l'] = 3  # expand possibilities
-target_dict['w'] = 5  # health + productivity multiplier
-target_dict['p'] = 5  # fun + practical experience
-target_dict['u'] = 6  # expand possibilities + productivity multiplier
-target_dict['n'] = 0  # none (all negative)
-hardList = [
-            # Event("mo", 830, 4, '2', True), # math
-            # Event("we", 830, 4, '2', True),
-            # Event("fr", 830, 4, '2', True),
-            Event("tu", 1230, 6, '1', True), # chem
-            Event("th", 1230, 6, '1', True),
-            Event("tu", 1100, 6, '4', True), # physics
-            Event("th", 1100, 6, '4', True),
-            Event("tu", 930, 6, '3', True), # civ
-            Event("th", 930, 6, '3', True),
-            Event("fr", 1330, 4, 'g', True),  # yang lab
-            # Event("mo", 1830, 8, 'r', True)  # robotics
-            ]
+# target_dict['s'] = 50  # overhead + productivity multiplier
+# target_dict['r'] = 9  # practical experience + career dev + network + fun + friends + meaning + knowledge
+# target_dict['g'] = 15  # practical experience + career dev + network + knowledge
+# target_dict['e'] = 15  # overhead
+# target_dict['t'] = 12  # fun + friends
+# target_dict['k'] = 0  # meaning + friends + expand possibilities
+# target_dict['1'] = 9.5  # requirement + meaning + expand possibilities
+# target_dict['2'] = 8.5  # requirement + knowledge + network
+# target_dict['3'] = 13  # requirement + practical experience + career dev + network + knowledge
+# target_dict['4'] = 13  # requirement + practical experience + career dev + network + knowledge
+# target_dict['5'] = 1  # NA
+# target_dict['j'] = 3  # overhead
+# target_dict['l'] = 3  # expand possibilities
+# target_dict['w'] = 5  # health + productivity multiplier
+# target_dict['p'] = 5  # fun + practical experience
+# target_dict['u'] = 6  # expand possibilities + productivity multiplier
+# target_dict['n'] = 0  # none (all negative)
+# hardList = [
+#             # Event("mo", 830, 4, '2', True), # math
+#             # Event("we", 830, 4, '2', True),
+#             # Event("fr", 830, 4, '2', True),
+#             Event("tu", 1230, 6, '1', True), # chem
+#             Event("th", 1230, 6, '1', True),
+#             Event("tu", 1100, 6, '4', True), # physics
+#             Event("th", 1100, 6, '4', True),
+#             Event("tu", 930, 6, '3', True), # civ
+#             Event("th", 930, 6, '3', True),
+#             Event("fr", 1330, 4, 'g', True),  # yang lab
+#             # Event("mo", 1830, 8, 'r', True)  # robotics
+#             ]
 
 
 goodsink = ['r','g'] # encourage to overrun allocation (given efficiency boosts from dw)
@@ -94,7 +94,7 @@ workCurve = { # how bad it is to undershoot (ie hum not important to miss but ph
     'g':1,
     'j':0
 }
-defs = spring23_labels
+defs = fall2023_labels
 # how much work (in hours) 15 minutes of deep work is equivalent to (ie after 4 hours, each 15 minutes is worth 30 minutes)
 dw_bonus_curve = [.25,.25,.25,.3,     .37,.37,.37,.37,     .4,.4,.4,.4,   .45,.45,.45,.45,     .5,.5,.5,.5,   .5,.5,.5,.5,    .5,.5,.5,.5,   .5,.5,.5,.5,    .5,.5,.5,.5,      .5,.5,.5,.5,     .5,.5,.5,.5,    .5,.5,.5,.5,     .5,.5,.5,.5,     .5,.5,.5,.5] # breaks after 9 hours
 nonworkCurve = { # ie how bad it is if i am off target on my non work obligations

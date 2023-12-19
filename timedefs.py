@@ -18,22 +18,23 @@ def excel_number_to_column(column_number):
 
 default_labels = {
     's': 'sleep',
-    'e': 'eating/logistics',
-    'r': 'RSOs/internship apps',
-    'p': 'programming projects / math problems',
+    'e': 'eating and logistics',
+    'r': 'RSOs and internship apps',
+    'p': 'misc projects',
     't': 'social',
-    'u': 'planning/thinking',
+    'u': 'planning and thinking',
     'n': 'procrastinating',
     'w': 'working out',
     'g': 'Yang lab',
-    'l': 'reading/listening',
+    'l': 'reading and listening',
     '1': 'class 1',
     '2': 'class 2',
     '3': 'class 3',
     '4': 'class 4',
     '5': 'audit',
     'j': 'email',
-    'k': 'quality social'
+    'k': 'quality social',
+    'a': 'applications'
 }
 dw_eligible = {
     's': False,
@@ -52,11 +53,12 @@ dw_eligible = {
     '4': True,
     '5': True,
     'j': False,
-    'k': False
+    'k': False,
+    'a': True
 }
 
 wbreak22_labels = default_labels.copy()
-wbreak22_labels['r'] = 'RSOs/internship apps/trek'
+wbreak22_labels['r'] = 'RSOs,internship apps,trek'
 wbreak22_dict = {
     'name': "winter break 22-23",
     'dates': ['2022-12-10', '2023-01-02'],
@@ -71,7 +73,7 @@ winter23_labels['4'] = "Chemistry 262 Thermodynamics"
 winter23_labels['5'] = "Audit: Chemistry 201 Inorganic I"
 winter23_dict = {
     'name': "winter quarter 2023",
-    'dates': ['2023-01-03', '2023-03-19'],
+    'dates': ['2023-01-03', '2023-03-10'],
     'defs': winter23_labels
 }
 
@@ -99,7 +101,7 @@ week2_dict = {
 
 summerjune_labels = default_labels.copy()
 summerjune_labels['1'] = "Shankar Quantum Mechanics"
-summerjune_labels['2'] = "Ashcroft/Mermin Solid State"
+summerjune_labels['2'] = "Ashcroft Mermin Solid State"
 summerjune_labels['3'] = "CS Placement Prep"
 summerjune_labels['4'] = "Argonne"
 summerjune_labels['5'] = None
@@ -110,22 +112,79 @@ summerjune_dict= {
 }
 
 argonne_labels = default_labels.copy()
-argonne_labels['4'] = "Argonne"
-argonne_labels['3'] = "CS Placement Prep / Lin Alg."
+argonne_labels['4'] = "Argonne Work"
+argonne_labels['3'] = "CS Placement Prep + Lin Alg."
 argonne_labels['2'] = None
 argonne_labels['1'] = None
 argonne_labels['5'] = None
 summerargonne_dict ={
-    'name':"Argonne",
-    'dates':['2023-07-10','2023-09-15'],
+    'name':"Argonne + After",
+    'dates':['2023-07-10','2023-09-24'],
     'defs':argonne_labels
 }
 
+fall2023_labels = default_labels.copy()
+fall2023_labels['1'] = "Greece"
+fall2023_labels['2'] = "Math 186"
+fall2023_labels['3'] = "Quantum Engineering"
+fall2023_labels['4'] = "MENG 211"
+fall2023_labels['5'] = None
+fall23_dict = {
+    'name':"fall quarter 2023",
+    'dates':['2023-09-25','2023-12-08'],
+    'defs': fall2023_labels
+}
+
+wbreak23_labels = default_labels.copy()
+wbreak23_labels['1'] = None
+wbreak23_labels['2'] = None
+wbreak23_labels['3'] = None
+wbreak23_labels['4'] = None
+wbreak23_labels['5'] = None
+wbreak23_dict = {
+    'name':"winter break 2023",
+    'dates':['2023-12-09','2023-12-17'],
+    'defs': wbreak23_labels
+}
+
+aggregate_labels = default_labels.copy()
+aggregate_labels['1'] = 'Classwork + Argonne'
+aggregate_labels['2'] = 'Classwork + Argonne'
+aggregate_labels['3'] = 'Classwork + Argonne'
+aggregate_labels['4'] = 'Classwork + Argonne'
+aggregate_labels['5'] = 'Classwork + Argonne'
+aggregate_labels['k'] = 'social' # to autogroup with t
+aggregate_labels['a'] = 'RSOs and internship apps' # to autogroup with r
+aggregate_dict = {
+    'name':"2023 wrapped",
+    'dates':['2023-01-01','2023-12-17'],
+    'defs': aggregate_labels
+}
+
+aggregate_labels2 = default_labels.copy()
+aggregate_labels2['1'] = 'productive'
+aggregate_labels2['2'] = 'productive'
+aggregate_labels2['3'] = 'productive'
+aggregate_labels2['4'] = 'productive'
+aggregate_labels2['5'] = 'productive'
+aggregate_labels2['k'] = 'social' # to autogroup with t
+aggregate_labels2['a'] = 'productive'
+aggregate_labels2['r'] = 'productive'
+aggregate_labels2['g'] = 'productive'
+aggregate_labels2['j'] = 'productive'
+aggregate_labels2['p'] = 'fun productive'
+aggregate_labels2['l'] = 'fun productive'
+aggregate_dict2 = {
+    'name':"2023 wrapped, 2",
+    'dates':['2023-01-01','2023-12-17'],
+    'defs': aggregate_labels2
+}
+
 start_row = 2
-start_col = excel_column_to_number('AB')
-end_col = excel_column_to_number('DS')
+start_col = excel_column_to_number('AC')
+end_col = excel_column_to_number('DT')
 start_date = datetime.strptime("2022-12-05",'%Y-%m-%d')
-timeframes = [wbreak22_dict,winter23_dict,spring23_dict,summerjune_dict,summerargonne_dict,week1_dict,week2_dict]
+timeframes = [wbreak22_dict,winter23_dict,spring23_dict,summerjune_dict,summerargonne_dict,fall23_dict,wbreak23_dict,aggregate_dict,aggregate_dict2]
 df = pd.read_csv('Timespent.csv')
 days2num = {'mo':0,'tu':1,'we':2,'th':3,'fr':4,'sa':5,'su':6}
 num2days = {value: key for key, value in days2num.items()}
