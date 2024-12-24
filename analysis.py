@@ -2,8 +2,9 @@ import matplotlib as plt
 from timedefs import *
 from sched_funcs import *
 import os
-from preferences import *
-timeperiod = 5
+import sys
+# from preferences import *
+timeperiod = int(sys.argv[1])
 """
     0   wbreak22_dict
     1   winter23_dict
@@ -12,9 +13,15 @@ timeperiod = 5
     4   summerargonne_dict
     5   fall23_dict
     6   wbreak23_dict
-    7   aggregrate_dict
-    8   aggregrate_dict2
-
+    7   aggregrate23_dict
+    8   aggregrate23_dict2
+    9   winter24_dict
+    10  spring24_dict
+    11  summer24_dict
+    12  fall24_dict
+    13  wbreak24_dict
+    14  aggregate24_dict
+    15  aggregate24_dict2
 """
 defs = timeframes[timeperiod]['defs']
 dates = timeframes[timeperiod]['dates']
@@ -36,4 +43,4 @@ continuities, terminators, totals, dws = schedule_analyze(flist,defs)
 if doGraphs:
     overtimeplots(flist,defs,folder_name,dates)
 verbose_analyze(flist,defs,continuities,terminators,totals,dws,regrouping=True,ultraVerbose=False,graphing=folder_name)
-
+extra_analysis(dates,df,auxiliary_dict,folder_name)
