@@ -277,6 +277,15 @@ aggregate24_dict2 = {
     'defs': aggregate23_labels2
 }
 
+aggregate23_labels3 = default_labels.copy()
+for key in aggregate23_labels3:
+    if key != 's':
+        aggregate23_labels3[key] = "not sleep"
+aggregate23_dict3 = {
+    'name': "2024 wrapped, 3",
+    'dates': ['2024-01-01','2024-12-22'],
+    'defs' : aggregate23_labels3
+}
 
 start_row = 2
 start_col = excel_column_to_number('AJ')
@@ -298,7 +307,8 @@ timeframes = [
     fall24_dict, # 12
     wbreak24_dict, # 13
     aggregate24_dict, # 14
-    aggregate24_dict2 # 15
+    aggregate24_dict2, # 15
+    aggregate23_dict3 # 16
 ]
 df = pd.read_csv('Timespent.csv')
 days2num = {'mo':0,'tu':1,'we':2,'th':3,'fr':4,'sa':5,'su':6}

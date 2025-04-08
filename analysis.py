@@ -41,6 +41,17 @@ if doGraphs:
 data_list,flist = pull_schedule(dates,df,show=False)
 continuities, terminators, totals, dws = schedule_analyze(flist,defs)
 if doGraphs:
+    print("OVERTIME PLOTS")
     overtimeplots(flist,defs,folder_name,dates)
+    print("OVERTIME PLOTS /")
 verbose_analyze(flist,defs,continuities,terminators,totals,dws,regrouping=True,ultraVerbose=False,graphing=folder_name)
 extra_analysis(dates,df,auxiliary_dict,folder_name)
+# not sleeping
+flist2 = []
+for chunk in flist:
+    if chunk == 's':
+        flist2.append(chunk)
+    else:
+        flist2.append('p')
+continuities2, terminators2, totals2, dws2 = schedule_analyze(flist2,defs)
+verbose_analyze(flist2,defs,continuities2,terminators2,totals2,dws2, regrouping=True, ultraVerbose=False,graphing=folder_name)

@@ -132,6 +132,20 @@ def verbose_analyze(flat_list, def_dict,conts,terms,tots,dwss,regrouping=False,u
                 print("Most commonly followed by:", Counter(terms[nkey]).most_common(3))
                 tsum += tots[nkey]
                 if len(dwss[nkey]) > 0:
+                    if graphing is not None:
+                        activity = nkey.replace(" ","")
+                        file_name = activity+"_DW_SessionHistogram.png"
+                        full_path = os.path.join(graphing,file_name)
+                        plt.clf()
+                        msesh = max(dwss[nkey])
+                        plt.hist(dwss[nkey],bins=[i *.5 for i in range(int(msesh*2)+2)])
+                        plt.xlabel("Deep Work Session Length (h)",labelpad=-2)
+                        plt.ylabel("Frequency")
+                        plt.xticks([i * 0.5 for i in range(int(msesh * 2) + 2)], rotation=60)
+                        plt.title("Deep Work Sessions Lengths of " + nkey)
+                        plt.savefig(full_path, dpi=300)
+
+                    # TODO
                     # count = 0
                     # for item in flat_list:
                     #     if key + "d" in item:
@@ -172,28 +186,43 @@ def overtimeplots(flat_list,def_dict,fname,dates):
     splitter = 96*7 # 1 week
     weeks = int(len(flat_list)/splitter+1)
     full_data = dict()
+    dw_data = dict()
     for key in def_dict:
         full_data[def_dict[key]] = [0]*weeks
+        if dw_eligible[key]:
+            dw_data[def_dict[key]] = [0]*weeks
     for i,fifteen in enumerate(flat_list):
         fif = fifteen.strip("d")
         full_data[def_dict[fif]][int(i/splitter)] += .25
+        if "d" in fifteen and dw_eligible[fif]:
+            dw_data[def_dict[fif]][int(i/splitter)] += .25
     for j in range(weeks):
         wsum = 0
+        dwsum = 0
         for key in full_data.keys():
             wsum += full_data[key][j]
+        for key in dw_data.keys():
+            dwsum += dw_data[key][j]
         for key in full_data.keys():
             if wsum != 0:
                 full_data[key][weeks-1] *= 168/wsum
             else:
                 full_data[key][weeks-1] = 0
+        for key in dw_data.keys():
+            if dwsum != 0:
+                dw_data[key][weeks-1] *= 168/dwsum
+            else:
+                dw_data[key][weeks-1] = 0
     full_data = {key: value for key, value in full_data.items() if sum(value) != 0}
+    dw_data = {key: value for key, value in dw_data.items() if sum(value) != 0}
+
     start_date = datetime.strptime(dates[0], '%Y-%m-%d')
     days_from_start = (start_date - datetime(start_date.year, 1, 1)).days
     week_starts = [start_date + timedelta(days=(7 * i)) for i in range((365 - days_from_start) // 7 + 1)]
-    def OtimePlot(doSleep):
+    def OtimePlot(doSleep,d,dname):
         plt.figure(figsize=(12, 8))
         setL=-1
-        for category, values in full_data.items():
+        for category, values in d.items():
             if category == 'sleep' and not doSleep:
                 continue
             setL = len(values)
@@ -202,16 +231,13 @@ def overtimeplots(flat_list,def_dict,fname,dates):
         plt.xticks(week_starts[0:setL],rotation=60)
         plt.ylabel('Hours per week')
         plt.legend(fontsize='small')
-        if doSleep:
-            file_name = "OverTime.png"
-        else:
-            file_name = "OverTimeNoSleep.png"
-        full_path = os.path.join(fname, file_name)
+        full_path = os.path.join(fname, dname)
         plt.title("Activities ("+dates[0]+" --> "+dates[1]+')')
         plt.savefig(full_path, dpi=300)
         plt.clf()
-    OtimePlot(True)
-    OtimePlot(False)
+    OtimePlot(True,full_data,"OverTime.png")
+    OtimePlot(False,full_data,"OverTimeNoSleep.png")
+    OtimePlot(False,dw_data,"DWTime.png")
     # correlations
     correlation_matrix = np.corrcoef([full_data[key] for key in full_data])
     plt.imshow(correlation_matrix, cmap='RdYlGn', vmin=-1, vmax=1)
@@ -222,6 +248,10 @@ def overtimeplots(flat_list,def_dict,fname,dates):
     full_path2 = os.path.join(fname, "WeeklyCorrelation.png")
     plt.savefig(full_path2, dpi=300)
     plt.clf()
+
+
+
+
     # most frequent at each time of day
 
 
