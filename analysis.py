@@ -22,6 +22,8 @@ timeperiod = int(sys.argv[1])
     13  wbreak24_dict
     14  aggregate24_dict
     15  aggregate24_dict2
+    16  aggregate23_dict3
+    17  testing
 """
 defs = timeframes[timeperiod]['defs']
 dates = timeframes[timeperiod]['dates']
@@ -39,6 +41,8 @@ if doGraphs:
         os.makedirs(folder_name)
 
 data_list, flat_list = pull_schedule(dates,df,show=False)
+deepwork_analyze(flat_list, defs, folder_name)
+exit()
 continuities, terminators, totals, dws = schedule_analyze(flat_list,defs)
 if doGraphs:
     print("OVERTIME PLOTS")

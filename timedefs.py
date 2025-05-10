@@ -277,15 +277,23 @@ aggregate24_dict2 = {
     'defs': aggregate23_labels2
 }
 
-aggregate23_labels3 = default_labels.copy()
-for key in aggregate23_labels3:
+aggregate24_labels3 = default_labels.copy()
+for key in aggregate24_labels3:
     if key != 's':
-        aggregate23_labels3[key] = "not sleep"
-aggregate23_dict3 = {
+        aggregate24_labels3[key] = "not sleep"
+aggregate23_dict4 = {
     'name': "2024 wrapped, 3",
     'dates': ['2024-01-01','2024-12-22'],
-    'defs' : aggregate23_labels3
+    'defs' : aggregate24_labels3
 }
+
+testing_labels = fall24_dict.copy()
+testing_dict = {
+    'name': "testing",
+    'dates':['2024-9-30','2024-12-12'],
+    'defs': testing_labels
+}
+
 
 start_row = 2
 start_col = excel_column_to_number('AJ')
@@ -308,7 +316,8 @@ timeframes = [
     wbreak24_dict, # 13
     aggregate24_dict, # 14
     aggregate24_dict2, # 15
-    aggregate23_dict3 # 16
+    aggregate23_dict4, # 16
+    testing_dict # 17
 ]
 df = pd.read_csv('Timespent.csv')
 days2num = {'mo':0,'tu':1,'we':2,'th':3,'fr':4,'sa':5,'su':6}

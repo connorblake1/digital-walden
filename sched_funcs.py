@@ -49,6 +49,91 @@ def schedule_analyze(flat_list,def_dict):
                 if dw_len > 0:
                     dw_sessions[current_key].append(dw_len)
     return continuities, terminators, sum_totals, dw_sessions
+
+
+def deepwork_analyze(flat_list, def_dict, folder_name):
+    days = int(len(flat_list)/96)
+    time_start_buckets = [ [] for i in range(96)]
+    long_time_start_buckets = [ [] for i in range(96)]
+    indw_bucket = [0]*96
+    long_indw_bucket = [0]*96
+    long_cutoff = 12
+    for i, full_key in enumerate(flat_list):
+        if i == 0:
+            continue
+        if "d" in full_key:
+            indw_bucket[i%96] += 1
+        if "d" in full_key and flat_list[i-1] != full_key:
+            
+            j = i+1
+            while flat_list[j] == full_key:
+                j+= 1
+            time_start_buckets[i%96].append((j-i)*.25)
+            if j-i >= long_cutoff:
+                long_time_start_buckets[i%96].append((j-i)*.25)
+                for k in range(i,j):
+                    long_indw_bucket[k%96] += 1
+
+    indw_bucket = np.array(indw_bucket)/days
+    long_indw_bucket = np.array(long_indw_bucket)/days
+    
+
+    hour_ticks = np.arange(0, 96, 4)
+    hour_labels = [f"{h}:00" for h in range(24)]
+
+    
+    # plot by hour of day
+    fig, ax = plt.subplots()
+    ax.bar(range(96), indw_bucket, width=1)
+    ax.set_xticks(hour_ticks)
+    ax.set_xticklabels(hour_labels, rotation=90)
+    ax.set_xlabel("Time of Day")
+    ax.set_title("Proportion of Days in Deep Work by Time of Day")
+    plt.tight_layout()
+    plt.savefig(os.path.join(folder_name,"dw_tod_histogram.png"), dpi=300)
+    plt.clf()
+    plt.cla()
+    # long by hour
+    fig, ax = plt.subplots()
+    ax.bar(range(96), long_indw_bucket, width=1)
+    ax.set_xticks(hour_ticks)
+    ax.set_xticklabels(hour_labels, rotation=90)
+    ax.set_xlabel("Time of Day")
+    ax.set_title("Proportion of Days in Deep Work by Time of Day (Long)")
+    plt.tight_layout()
+    plt.savefig(os.path.join(folder_name,"dw_ltod_histogram.png"), dpi=300)
+    plt.clf()
+    plt.cla()
+
+    # total hours started at a certain time
+    dw_start_times = [sum(arr) for arr in time_start_buckets]
+    fig, ax = plt.subplots()
+    ax.bar(range(96), dw_start_times, width=1)
+    ax.set_xticks(hour_ticks)
+    ax.set_xticklabels(hour_labels, rotation=90)
+    ax.set_xlabel("Time of Day")
+    ax.set_ylabel("Hours")
+
+    ax.set_title("Deep Work Hours by Time of Day When Started")
+    plt.tight_layout()
+    plt.savefig(os.path.join(folder_name,"dw_start_histogram.png"), dpi=300)
+    plt.clf()
+    plt.cla()
+    # long starts
+    long_dw_start_times = [sum(arr) for arr in long_time_start_buckets]
+    fig, ax = plt.subplots()
+    ax.bar(range(96), long_dw_start_times, width=1)
+    ax.set_xticks(hour_ticks)
+    ax.set_xticklabels(hour_labels, rotation=90)
+    ax.set_xlabel("Time of Day")
+    ax.set_ylabel("Hours")
+    ax.set_title("Deep Work Hours by Time of Day When Started (Long)")
+    plt.tight_layout()
+    plt.savefig(os.path.join(folder_name,"dw_longstart_histogram.png"), dpi=300)
+    plt.clf()
+    plt.cla()
+
+
 def reassignDW(flat_list):
     # when randomly generating schedules, assign blocks longer than 1.5h to be deep work, does not apply to analysis
     for i,block in enumerate(flat_list):
