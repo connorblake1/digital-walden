@@ -6,50 +6,49 @@ from statistics import mode
 import os
 
 def schedule_analyze(flat_list,def_dict):
-    conts = def_dict.copy()
-    terms = def_dict.copy()
-    tots = def_dict.copy()
-    dwss = def_dict.copy()
-    for key in conts:
-        conts[key] = []
-        terms[key] = []
-        tots[key] = 0
-        dwss[key] = []
-    curr = None
-    currLen = 0
-    dw = False
-    dwLen = 0
-    for i, fifteen in enumerate(flat_list):
-        fif = fifteen.strip("d")
-        tots[fif] = tots[fif] + .25
-        if curr == None:  # assumes not starting in DW
-            curr = fifteen
-            currLen = .25
+    continuities = def_dict.copy()
+    terminators = def_dict.copy()
+    sum_totals = def_dict.copy()
+    dw_sessions = def_dict.copy()
+    for key in continuities:
+        continuities[key] = []
+        terminators[key] = []
+        sum_totals[key] = 0
+        dw_sessions[key] = []
+    current_key = None
+    session_length = 0
+    dw_len = 0
+    for i, full_key in enumerate(flat_list):
+        base_key = full_key.strip("d")
+        sum_totals[base_key] = sum_totals[base_key] + .25
+        if current_key == None:  # assumes not starting in DW
+            current_key = full_key
+            session_length = .25
         else:
-            currkey = curr.strip("d")
-            isdw = "d" in fifteen
-            if fif == currkey:
-                currLen += .25
+            current_key = current_key.strip("d")
+            isdw = "d" in full_key
+            if base_key == current_key:
+                session_length += .25
                 if isdw:
-                    dwLen += .25
+                    dw_len += .25
                 else:
-                    if dwLen > 0:
-                        dwss[currkey].append(dwLen)
-                    dwLen = 0
+                    if dw_len > 0:
+                        dw_sessions[current_key].append(dw_len)
+                    dw_len = 0
             else:
-                terms[currkey].append(fif)
-                conts[currkey].append(currLen)
-                if dwLen > 0:
-                    dwss[currkey].append(dwLen)
-                currLen = .25
-                dwLen = int(isdw) * .25
-                curr = fifteen
+                terminators[current_key].append(base_key)
+                continuities[current_key].append(session_length)
+                if dw_len > 0:
+                    dw_sessions[current_key].append(dw_len)
+                session_length = .25
+                dw_len = int(isdw) * .25
+                current_key = full_key
             if i == len(flat_list) - 1:
-                terms[currkey].append(fif)
-                conts[currkey].append(currLen)
-                if dwLen > 0:
-                    dwss[currkey].append(dwLen)
-    return conts, terms, tots, dwss
+                terminators[current_key].append(base_key)
+                continuities[current_key].append(session_length)
+                if dw_len > 0:
+                    dw_sessions[current_key].append(dw_len)
+    return continuities, terminators, sum_totals, dw_sessions
 def reassignDW(flat_list):
     # when randomly generating schedules, assign blocks longer than 1.5h to be deep work, does not apply to analysis
     for i,block in enumerate(flat_list):
